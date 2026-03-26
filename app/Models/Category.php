@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
 
 class Category extends Model
@@ -24,19 +22,19 @@ class Category extends Model
         'parent_id' => 'integer',
     ];
 
-    public function parent(): BelongsTo
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->orderBy('position');
+    }
+
+    public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function children(): HasMany
+    public function articles()
     {
-        return $this->hasMany(Category::class, 'parent_id')->ordered();
-    }
-
-    public function articles(): HasMany
-    {
-        return $this->hasMany(Article::class)->ordered();
+        return $this->hasMany(Article::class)->orderBy('position');
     }
 
     public function scopeOrdered(Builder $query): Builder

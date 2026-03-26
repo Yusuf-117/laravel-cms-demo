@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Builder;
 
 class Article extends Model
 {
@@ -107,5 +108,9 @@ class Article extends Model
             $q->where('title', 'like', "%{$term}%")
               ->orWhere('excerpt', 'like', "%{$term}%");
         });
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d-m-Y H:m') : null;
     }
 }

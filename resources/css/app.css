@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -7,29 +7,92 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --docs-primary: #bd4b4b;
+  --docs-secondary: #efb7b7;
+  --docs-accent: #00805f;
 
+  --docs-bg: #f7f7f7;
+  --docs-panel: #ffffff;
+  --docs-panel-2: #f3f3f3;
+
+  --docs-text: #111111;
+  --docs-muted: #6b7280;
+
+  --docs-border: #e5e7eb;
+  --docs-border-strong: #d1d5db;
+}
+
+.dark {
+  --docs-primary: #bd4b4b;
+  --docs-secondary: #efb7b7;
+  --docs-accent: #00805f;
+
+  --docs-bg: #000000;
+  --docs-panel: #0b0b0d;
+  --docs-panel-2: #111114;
+
+  --docs-text: #ededed;
+  --docs-muted: #9ca3af;
+
+  --docs-border: #1a1a1f;
+  --docs-border-strong: #31313a;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--docs-border-strong) transparent;
+}
+
+body {
+  background: var(--docs-bg);
+  color: var(--docs-text);
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--docs-border-strong);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--docs-primary);
+}
+
+
+
+/* For Editor */
 .ProseMirror p {
     margin: 0;
-  }
+}
 
-  .ProseMirror ul,
-  .ProseMirror ol {
+.ProseMirror ul,
+.ProseMirror ol {
     margin: 0;
     padding-left: 1.5rem;
-  }
+}
 
-  .ProseMirror li {
+.ProseMirror li {
     margin: 0;
-  }
+}
 
-  .ProseMirror h1,
-  .ProseMirror h2,
-  .ProseMirror h3 {
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3 {
     margin: 0.5rem 0;
-  }
+}
