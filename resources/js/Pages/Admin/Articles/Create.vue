@@ -5,6 +5,7 @@ import Form from './_Form.vue'
 
 const props = defineProps({
   categories: Array,
+  tags: Array,
 })
 
 const form = useForm({
@@ -13,6 +14,7 @@ const form = useForm({
   category_id: '',
   content: '',
   status: 'draft',
+  tags: [],
 })
 
 function submit() {
@@ -30,7 +32,13 @@ function submit() {
       </div>
 
       <div class="bg-white dark:bg-zinc-900 border rounded-xl p-6">
-        <Form :form="form" :categories="categories" :submit="submit" :isEdit="false" />
+        <Form
+          :form="form"
+          :categories="categories"
+          :tags="tags"
+          :submit="submit"
+          :isEdit="false"
+        />
       </div>
 
     </div>
