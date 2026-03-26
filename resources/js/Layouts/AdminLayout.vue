@@ -47,20 +47,10 @@ function logout() {
                 </div>
 
                 <nav class="p-2 space-y-1">
-                    <Link
-                        :href="route('admin.dashboard')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-                        Dashboard
-                    </Link>
-
-                    <Link
-                        :href="route('categories.index')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-                        Categories
-                    </Link>
-
-                    <Link
-                        :href="route('articles.index')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">
-                        Articles
-                    </Link>
+                    <Link :href="route('admin.dashboard')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">Dashboard</Link>
+                    <Link :href="route('categories.index')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">Categories</Link>
+                    <Link :href="route('articles.index')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">Articles</Link>
+                    <Link :href="route('media.index')" class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">Media</Link>
                 </nav>
             </aside>
 

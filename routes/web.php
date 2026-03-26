@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MediaController;
+
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Admin\ArticleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn() => Inertia::render('Home'))->name('Home');
+Route::get('/', fn () => Inertia::render('Home'))->name('Home');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'create'])->name('login');
@@ -17,7 +19,6 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
-
 
 Route::prefix('admin')
     ->middleware('auth')
@@ -29,4 +30,11 @@ Route::prefix('admin')
 
         Route::resource('articles', ArticleController::class)
             ->except(['show']);
+
+        Route::get('/media/list', [MediaController::class, 'list'])->name('media.list');
+        Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
+
+        Route::get('/media', [MediaController::class, 'index'])->name('media.index');
+        Route::get('/media/list', [MediaController::class, 'list'])->name('media.list');
+        Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
     });
