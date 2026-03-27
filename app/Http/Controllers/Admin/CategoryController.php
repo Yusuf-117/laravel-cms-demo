@@ -12,8 +12,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = Category::query()
-            ->when($request->search, fn ($q) =>
-                $q->where('name', 'like', "%{$request->search}%")
+            ->when($request->search, fn ($q) => $q->where('name', 'like', "%{$request->search}%")
             )
             ->orderBy('id')
             ->paginate(10)
@@ -37,14 +36,16 @@ class CategoryController extends Controller
             'slug' => ['required', 'string', 'max:140', 'unique:categories,slug'],
         ]);
 
-        Category::create($data);
+    Category::create($data);
 
         return redirect()->route('categories.index')->with('success', 'Category created');
     }
 
     public function edit(Category $category)
     {
-        return Inertia::render('Admin/Categories/Edit', [
+        $category->load(['articles:id,title,category_id']);
+
+        return inertia('Admin/Categories/Edit', [
             'category' => $category,
         ]);
     }
