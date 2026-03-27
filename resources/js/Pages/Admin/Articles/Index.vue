@@ -3,6 +3,8 @@ import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, router } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 import debounce from 'lodash/debounce'
+import { useAuth } from '@/composables/useAuth';
+const { canEdit } = useAuth();
 
 const props = defineProps({
   articles: Object,
@@ -42,7 +44,7 @@ function destroy(id) {
           </p>
         </div>
 
-        <Link
+        <Link v-if="canEdit"
           :href="route('articles.create')"
           class="inline-flex items-center px-4 py-2 rounded-lg bg-black text-white text-sm hover:opacity-90 dark:bg-white dark:text-black"
         >
@@ -113,7 +115,7 @@ function destroy(id) {
                   Edit
                 </Link>
 
-                <button
+                <button v-if="canEdit"
                   @click="destroy(a.id)"
                   class="text-sm text-red-600 hover:underline dark:text-red-400"
                 >
@@ -133,7 +135,7 @@ function destroy(id) {
 
       <!-- PAGINATION -->
       <div class="flex flex-wrap gap-2">
-        <Link
+        <Link v-if="canEdit"
           v-for="link in articles.links"
           :key="link.label"
           :href="link.url || ''"

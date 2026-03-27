@@ -1,6 +1,8 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, router, useForm } from '@inertiajs/vue3'
+import { useAuth } from '@/composables/useAuth';
+const { canEdit } = useAuth();
 
 const props = defineProps({
   category: Object,
@@ -72,23 +74,16 @@ function destroy() {
 
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-              <button
+              <button v-if="canEdit"
                 type="submit"
                 :disabled="form.processing"
                 class="inline-flex items-center rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50 dark:bg-white dark:text-black"
               >
                 Save Changes
               </button>
-
-              <Link
-                :href="route('categories.index')"
-                class="inline-flex items-center rounded-lg border border-zinc-300 px-4 py-2.5 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
-              >
-                Cancel
-              </Link>
             </div>
 
-            <button
+            <button v-if="canEdit"
               type="button"
               @click="destroy"
               class="inline-flex items-center rounded-lg border border-red-300 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950/40"

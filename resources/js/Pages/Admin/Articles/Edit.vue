@@ -2,6 +2,8 @@
 import AdminLayout from '@/Layouts/AdminLayout.vue'
 import { Link, router, useForm } from '@inertiajs/vue3'
 import Form from './_Form.vue'
+import { useAuth } from '@/composables/useAuth';
+const { canEdit } = useAuth();
 
 const props = defineProps({
   article: Object,
@@ -53,7 +55,7 @@ function destroy() {
       </div>
 
       <div class="flex justify-end">
-        <button @click="destroy" type="button" class="text-red-600 dark:text-red-400">
+        <button v-if="canEdit" @click="destroy" type="button" class="text-red-600 dark:text-red-400">
           Delete
         </button>
       </div>

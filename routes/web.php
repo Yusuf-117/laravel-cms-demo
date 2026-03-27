@@ -23,18 +23,35 @@ Route::post('/logout', [AuthController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
-Route::prefix('admin')
+    Route::prefix('admin')
     ->middleware('auth')
     ->group(function () {
+
         Route::get('/', DashboardController::class)->name('admin.dashboard');
 
-        Route::resource('categories', CategoryController::class)
-            ->except(['show']);
-
-        Route::resource('articles', ArticleController::class)
-            ->except(['show']);
-
+        // viewer + editor
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
         Route::get('/media', [MediaController::class, 'index'])->name('media.index');
         Route::get('/media/list', [MediaController::class, 'list'])->name('media.list');
-        Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
+
+        Route::get('articles/create', [ArticleController::class, 'create'])->name('articles.create');
+        Route::get('articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+
+        Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+
+        // editor only
+        Route::middleware('can:manage-content')->group(function () {
+
+            Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
+            Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+            Route::delete('articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+
+            Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
+            Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+            Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+            Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
+        });
     });

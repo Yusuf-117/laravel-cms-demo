@@ -47,20 +47,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function scopeAdmins($query)
-    {
-        return $query->where('role', 'admin');
-    }
-
-    public function scopeEditors($query)
-    {
-        return $query->where('role', 'editor');
-    }
-
-    public function scopeViewers($query)
-    {
-        return $query->where('role', 'viewer');
-    }
 
     public function articles(): HasMany
     {
@@ -69,11 +55,16 @@ class User extends Authenticatable
 
     public function canEdit(): bool
     {
-        return in_array($this->role, ['admin', 'editor'], true);
+        return in_array($this->role, ['admin'], true);
     }
 
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    public function isViewer(): bool
+    {
+        return $this->role === 'viewer';
     }
 }

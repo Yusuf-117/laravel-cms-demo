@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import Editor from "@/Components/Editor.vue";
+import { useAuth } from '@/composables/useAuth';
+const { canEdit } = useAuth();
 
 const props = defineProps({
     form: Object,
@@ -254,13 +256,13 @@ async function uploadAttachmentFile(e) {
                         class="text-sm bg-transparent outline-none w-28"
                     />
 
-                    <button type="button" @click="removeAttachment(i)">
+                    <button v-if="canEdit" type="button" @click="removeAttachment(i)">
                         ✕
                     </button>
                 </div>
             </div>
 
-            <button
+            <button v-if="canEdit"
                 type="button"
                 @click="openAttachments"
                 class="px-3 py-2 rounded bg-black text-white dark:bg-white dark:text-black"
@@ -328,7 +330,7 @@ async function uploadAttachmentFile(e) {
         </div>
 
         <div>
-            <button
+            <button v-if="canEdit"
                 class="bg-black text-white px-5 py-2 rounded-lg dark:bg-white dark:text-black"
             >
                 {{ isEdit ? "Update" : "Create" }}

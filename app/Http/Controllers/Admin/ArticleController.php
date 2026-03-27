@@ -74,7 +74,7 @@ class ArticleController extends Controller
             }
         }
 
-        return redirect()->route('articles.index');
+        return redirect()->route('articles.index')->with('success', 'Article created');
     }
 
     public function edit(Article $article)
@@ -128,7 +128,7 @@ class ArticleController extends Controller
             }
         }
 
-        return redirect()->route('articles.index');
+        return redirect()->route('articles.index')->with('success', 'Article updated');
     }
 
     public function destroy(Article $article)
