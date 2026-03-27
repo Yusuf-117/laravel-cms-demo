@@ -107,6 +107,11 @@ function showToast(message, type = "success") {
                         class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800"
                         >Media</Link
                     >
+                    <Link
+                        :href="route('admin.import')"
+                        class="block px-3 py-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        >Import</Link
+                    >
                 </nav>
             </aside>
 

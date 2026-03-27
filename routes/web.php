@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\DocsController;
 
@@ -43,6 +44,11 @@ Route::post('/logout', [AuthController::class, 'destroy'])
 
         // editor only
         Route::middleware('can:manage-content')->group(function () {
+
+            Route::get('/import', [ImportController::class, 'create'])->name('admin.import');
+            Route::post('/import', [ImportController::class, 'store'])
+                ->middleware('can:manage-content')
+                ->name('admin.import.store');
 
             Route::post('articles', [ArticleController::class, 'store'])->name('articles.store');
             Route::put('articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
