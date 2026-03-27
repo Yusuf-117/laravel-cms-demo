@@ -34,6 +34,7 @@ class Media extends Model
     protected $hidden = [
         'sha256',
     ];
+    protected $appends = ['url'];
 
     public function articles(): BelongsToMany
     {
@@ -55,5 +56,10 @@ class Media extends Model
     public function scopeOrdered(Builder $query): Builder
     {
         return $query->latest('id');
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return asset('storage/' . $this->path);
     }
 }

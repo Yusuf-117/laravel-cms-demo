@@ -16,6 +16,11 @@ const form = useForm({
   content: props.article.content,
   status: props.article.status,
   tags: props.article.tags.map(t => t.id),
+  attachments: (props.article.attachments || []).map(a => ({
+    media_id: a.media_id,
+    label: a.label,
+    sort_order: a.sort_order,
+  })),
 })
 
 function submit() {

@@ -20,6 +20,8 @@ class MediaController extends Controller
             'media' => Media::latest()->get()->map(fn ($m) => [
                 'id' => $m->id,
                 'url' => asset('storage/' . $m->path),
+                'name' => $m->original_name,
+                'mime' => $m->mime_type,
             ])
         ]);
     }

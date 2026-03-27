@@ -51,7 +51,7 @@ class DocsController extends Controller
     {
         abort_unless($article->status === 'published', 404);
 
-        $article->load('author:id,name', 'category:id,name');
+        $article->load('author:id,name', 'category:id,name','attachments.media');
 
         $categories = Category::with([
             'children.articles.author:id,name',

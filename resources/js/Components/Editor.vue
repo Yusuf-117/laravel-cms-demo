@@ -65,7 +65,7 @@ function openMedia() {
   fetch(route('media.list'))
   .then(res => res.json())
   .then(data => {
-    media.value = data.media
+    media.value = data.media.filter(m => m.url.match(/\.(jpg|jpeg|png|webp|gif)$/i))
   })
 }
 
@@ -75,9 +75,12 @@ function insertImage(url) {
 }
 
 async function upload(e) {
-    console.log("ran");
   const file = e.target.files[0]
   if (!file) return
+  if (!file.type.startsWith('image/')) {
+    alert('Only images allowed here');
+    return;
+}
 
   const formData = new FormData()
   formData.append('file', file)

@@ -45,6 +45,9 @@ class ArticleController extends Controller
             'content' => ['nullable'],
             'status' => ['required'],
             'tags' => ['array'],
+            'attachments' => ['array'],
+            'attachments.*.media_id' => ['required', 'exists:media,id'],
+            'attachments.*.label' => ['nullable', 'string'],
         ]);
 
         $article = Article::create($data);
@@ -61,13 +64,26 @@ class ArticleController extends Controller
 
         $article->tags()->sync($tagIds);
 
+        if ($request->attachments) {
+            foreach ($request->attachments as $i => $att) {
+                $article->attachments()->create([
+                    'media_id' => $att['media_id'],
+                    'label' => $att['label'] ?? null,
+                    'sort_order' => $i,
+                ]);
+            }
+        }
+
         return redirect()->route('articles.index');
     }
 
     public function edit(Article $article)
     {
         return Inertia::render('Admin/Articles/Edit', [
-            'article' => $article->load('tags:id,name'),
+            'article' => $article->load([
+                'tags:id,name',
+                'attachments.media:id,path,original_name'
+            ]),
             'categories' => Category::orderBy('name')->get(['id', 'name']),
             'tags' => Tag::orderBy('name')->get(['id', 'name']),
         ]);
@@ -82,6 +98,9 @@ class ArticleController extends Controller
             'content' => ['nullable'],
             'status' => ['required'],
             'tags' => ['array'],
+            'attachments' => ['array'],
+            'attachments.*.media_id' => ['required', 'exists:media,id'],
+            'attachments.*.label' => ['nullable', 'string'],
         ]);
 
         $article->update($data);
@@ -97,6 +116,17 @@ class ArticleController extends Controller
             });
 
         $article->tags()->sync($tagIds);
+        $article->attachments()->delete();
+
+        if ($request->attachments) {
+            foreach ($request->attachments as $i => $att) {
+                $article->attachments()->create([
+                    'media_id' => $att['media_id'],
+                    'label' => $att['label'] ?? null,
+                    'sort_order' => $i,
+                ]);
+            }
+        }
 
         return redirect()->route('articles.index');
     }
