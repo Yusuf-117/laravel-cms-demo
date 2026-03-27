@@ -41,9 +41,4 @@ class Category extends Model
     {
         return $query->orderBy('sort_order')->orderBy('name');
     }
-
-    public function scopeRoots(Builder $query): Builder
-    {
-        return $query->whereNull('parent_id')->ordered();
-    }
 }

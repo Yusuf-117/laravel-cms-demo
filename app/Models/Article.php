@@ -47,11 +47,6 @@ class Article extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class)->latest('id');
-    }
-
     public function media(): BelongsToMany
     {
         return $this->belongsToMany(Media::class, 'article_media')
@@ -68,33 +63,9 @@ class Article extends Model
         return $query->orderBy('sort_order')->orderBy('title');
     }
 
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->where('status', 'published');
-    }
-
-    public function scopeDrafts(Builder $query): Builder
-    {
-        return $query->where('status', 'draft');
-    }
-
     public function scopePublic(Builder $query): Builder
     {
         return $query->where('visibility', 'public');
-    }
-
-    public function scopeInternal(Builder $query): Builder
-    {
-        return $query->where('visibility', 'internal');
-    }
-
-    public function scopeVisibleTo(Builder $query, ?User $user): Builder
-    {
-        if ($user) {
-            return $query;
-        }
-
-        return $query->public();
     }
 
     public function scopeSearch(Builder $query, ?string $term): Builder

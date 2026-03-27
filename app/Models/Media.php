@@ -48,11 +48,6 @@ class Media extends Model
         return $this->hasMany(Attachment::class);
     }
 
-    public function scopeImages(Builder $query): Builder
-    {
-        return $query->where('mime_type', 'like', 'image/%');
-    }
-
     public function scopeOrdered(Builder $query): Builder
     {
         return $query->latest('id');
