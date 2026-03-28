@@ -150,28 +150,19 @@ async function uploadAttachmentFile(e) {
         <!-- Title -->
         <div>
             <label class="block text-sm font-medium mb-1">Title</label>
-            <input
-                v-model="form.title"
-                class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900"
-            />
+            <input v-model="form.title" class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900" />
         </div>
 
         <!-- Slug -->
         <div>
             <label class="block text-sm font-medium mb-1">Slug</label>
-            <input
-                v-model="form.slug"
-                class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900"
-            />
+            <input v-model="form.slug" class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900" />
         </div>
 
         <!-- Category -->
         <div>
             <label class="block text-sm font-medium mb-1">Category</label>
-            <select
-                v-model="form.category_id"
-                class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900"
-            >
+            <select v-model="form.category_id" class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900">
                 <option value="">Select</option>
                 <option v-for="c in categories" :key="c.id" :value="c.id">
                     {{ c.name }}
@@ -184,33 +175,20 @@ async function uploadAttachmentFile(e) {
             <label class="block text-sm font-medium mb-1">Tags</label>
 
             <div class="flex flex-wrap gap-2 mb-2">
-                <span
-                    v-for="t in selectedTags"
-                    :key="t.id"
-                    class="px-2 py-1 bg-zinc-200 dark:bg-zinc-700 rounded text-xs flex items-center gap-1"
-                >
+                <span v-for="t in selectedTags" :key="t.id"
+                    class="px-2 py-1 bg-zinc-200 dark:bg-zinc-700 rounded text-xs flex items-center gap-1">
                     {{ t.name }}
                     <button type="button" @click="removeTag(t.id)">×</button>
                 </span>
             </div>
 
-            <input
-                v-model="tagInput"
-                @keydown.enter.prevent="addTag(tagInput)"
-                placeholder="Type to search or create..."
-                class="w-full border px-3 py-2 rounded dark:bg-zinc-900"
-            />
+            <input v-model="tagInput" @keydown.enter.prevent="addTag(tagInput)"
+                placeholder="Type to search or create..." class="w-full border px-3 py-2 rounded dark:bg-zinc-900" />
 
-            <div
-                v-if="suggestions.length"
-                class="absolute z-10 mt-1 w-full bg-white dark:bg-zinc-900 border rounded shadow"
-            >
-                <div
-                    v-for="s in suggestions"
-                    :key="s.id"
-                    @click="addTag(s)"
-                    class="px-3 py-2 text-sm cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                >
+            <div v-if="suggestions.length"
+                class="absolute z-10 mt-1 w-full bg-white dark:bg-zinc-900 border rounded shadow">
+                <div v-for="s in suggestions" :key="s.id" @click="addTag(s)"
+                    class="px-3 py-2 text-sm cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800">
                     {{ s.name }}
                 </div>
             </div>
@@ -219,10 +197,7 @@ async function uploadAttachmentFile(e) {
         <!-- Status -->
         <div>
             <label class="block text-sm font-medium mb-1">Status</label>
-            <select
-                v-model="form.status"
-                class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900"
-            >
+            <select v-model="form.status" class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900">
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
             </select>
@@ -239,22 +214,13 @@ async function uploadAttachmentFile(e) {
             <label class="block text-sm font-medium mb-2">Attachments</label>
 
             <div class="flex flex-wrap gap-3 mb-3">
-                <div
-                    v-for="(a, i) in attachments"
-                    :key="i"
-                    class="flex items-center gap-2 px-3 py-2 border rounded bg-zinc-100 dark:bg-zinc-800"
-                >
-                    <span
-                        class="text-xs px-2 py-1 rounded bg-zinc-300 dark:bg-zinc-700"
-                    >
+                <div v-for="(a, i) in attachments" :key="i"
+                    class="flex items-center gap-2 px-3 py-2 border rounded bg-zinc-100 dark:bg-zinc-800">
+                    <span class="text-xs px-2 py-1 rounded bg-zinc-300 dark:bg-zinc-700">
                         {{ a.name?.split(".").pop()?.toUpperCase() || "FILE" }}
                     </span>
 
-                    <input
-                        v-model="a.label"
-                        placeholder="Label"
-                        class="text-sm bg-transparent outline-none w-28"
-                    />
+                    <input v-model="a.label" placeholder="Label" class="text-sm bg-transparent outline-none w-28" />
 
                     <button v-if="canEdit" type="button" @click="removeAttachment(i)">
                         ✕
@@ -262,48 +228,34 @@ async function uploadAttachmentFile(e) {
                 </div>
             </div>
 
-            <button v-if="canEdit"
-                type="button"
-                @click="openAttachments"
-                class="px-3 py-2 rounded bg-black text-white dark:bg-white dark:text-black"
-            >
+            <button v-if="canEdit" type="button" @click="openAttachments"
+                class="px-3 py-2 rounded bg-black text-white dark:bg-white dark:text-black">
                 Add Attachment
             </button>
         </div>
 
         <!-- modal for attachments -->
-        <div
-            v-if="showAttachmentPicker"
-            class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-        >
-            <div
-                class="bg-white dark:bg-zinc-900 rounded-xl p-6 w-full max-w-3xl max-h-[80vh] overflow-auto"
-            >
+        <div v-if="showAttachmentPicker" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-white dark:bg-zinc-900 rounded-xl p-6 w-full max-w-3xl max-h-[80vh] overflow-auto">
                 <div class="flex justify-between mb-4">
                     <h2 class="text-lg font-semibold">Select Attachment</h2>
                     <button @click="showAttachmentPicker = false">✕</button>
                 </div>
                 <div class="space-y-2 mb-5">
-                    <label class="flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 text-white rounded-xl cursor-pointer hover:bg-indigo-700 transition shadow-md">
+                    <label
+                        class="flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 text-white rounded-xl cursor-pointer hover:bg-indigo-700 transition shadow-md">
                         <span>Upload File</span>
                         <input type="file" class="hidden" @change="uploadAttachmentFile">
                     </label>
                 </div>
                 <div class="grid grid-cols-3 gap-4">
-                    <div
-                        v-for="m in mediaLibrary"
-                        :key="m.id"
+                    <div v-for="m in mediaLibrary" :key="m.id"
                         class="cursor-pointer border rounded p-3 hover:opacity-80 flex items-center gap-3"
-                        @click="addAttachment(m)"
-                    >
+                        @click="addAttachment(m)">
                         <div
-                            class="w-10 h-10 flex items-center justify-center rounded bg-zinc-200 dark:bg-zinc-800 text-xs"
-                        >
+                            class="w-10 h-10 flex items-center justify-center rounded bg-zinc-200 dark:bg-zinc-800 text-xs">
                             <template v-if="m.mime?.startsWith('image/')">
-                                <img
-                                    :src="m.url"
-                                    class="w-full h-full object-cover rounded"
-                                />
+                                <img :src="m.url" class="w-full h-full object-cover rounded" />
                             </template>
 
                             <template v-else-if="m.mime?.includes('pdf')">
@@ -311,14 +263,14 @@ async function uploadAttachmentFile(e) {
                             </template>
 
                             <template v-else-if="m.mime?.includes('zip')">
-                                 <span class="px-4">ZIP</span>
+                                <span class="px-4">ZIP</span>
                             </template>
 
                             <template v-else-if="m.mime?.includes('word')">
-                                 <span class="px-4">DOC</span>
+                                <span class="px-4">DOC</span>
                             </template>
 
-                            <template v-else>  <span class="px-4">FILE</span> </template>
+                            <template v-else> <span class="px-4">FILE</span> </template>
                         </div>
 
                         <div class="text-sm truncate">
@@ -330,9 +282,7 @@ async function uploadAttachmentFile(e) {
         </div>
 
         <div>
-            <button v-if="canEdit"
-                class="bg-black text-white px-5 py-2 rounded-lg dark:bg-white dark:text-black"
-            >
+            <button v-if="canEdit" class="bg-black text-white px-5 py-2 rounded-lg dark:bg-white dark:text-black">
                 {{ isEdit ? "Update" : "Create" }}
             </button>
         </div>

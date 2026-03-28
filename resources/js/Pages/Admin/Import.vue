@@ -20,17 +20,11 @@ function submit() {
                 Import Categories & Articles
             </h1>
 
-            <textarea
-                v-model="json"
-                class="w-full h-80 p-3 border rounded-lg font-mono text-sm"
-                placeholder="Paste JSON here..."
-            ></textarea>
+            <textarea v-model="json" class="w-full h-80 p-3 border rounded-lg font-mono text-sm"
+                placeholder="Paste JSON here..."></textarea>
 
             <div class="mt-4">
-                <button
-                    @click="submit"
-                    class="bg-black text-white px-5 py-2 rounded-lg"
-                >
+                <button @click="submit" class="bg-black text-white px-5 py-2 rounded-lg">
                     Import
                 </button>
             </div>
