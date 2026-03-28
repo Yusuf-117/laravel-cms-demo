@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class DocsController extends Controller
@@ -67,6 +68,25 @@ class DocsController extends Controller
         return Inertia::render('Docs/Show', [
             'article' => $article,
             'categories' => $categories,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $articles = Article::with('category')
+            ->published()
+            ->public()
+            ->search($request->search)
+            ->latest()
+            ->take(8)
+            ->get(['id', 'title', 'slug', 'category_id']);
+
+        return response()->json([
+            'articles' => $articles->map(fn ($a) => [
+                'title' => $a->title,
+                'slug' => $a->slug,
+                'category' => $a->category?->name,
+            ])
         ]);
     }
 

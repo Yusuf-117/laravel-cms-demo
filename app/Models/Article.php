@@ -67,6 +67,10 @@ class Article extends Model
     {
         return $query->where('visibility', 'public');
     }
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('status', 'published');
+    }
 
     public function scopeSearch(Builder $query, ?string $term): Builder
     {

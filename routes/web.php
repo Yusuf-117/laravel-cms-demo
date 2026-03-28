@@ -14,6 +14,7 @@ use Inertia\Inertia;
 Route::get('/', [DocsController::class, 'index'])->name('home');
 Route::get('/docs/categories/{category:slug}', [DocsController::class, 'category'])->name('docs.categories.show');
 Route::get('/docs/articles/{article:slug}', [DocsController::class, 'article'])->name('docs.articles.show');
+Route::get('/search', [DocsController::class, 'search'])->name('docs.search');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'create'])->name('login');

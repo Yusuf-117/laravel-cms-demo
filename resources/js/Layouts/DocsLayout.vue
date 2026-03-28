@@ -1,6 +1,7 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, nextTick } from "vue";
+import debounce from "lodash/debounce";
 
 const props = defineProps({
     categories: {
@@ -79,6 +80,13 @@ onMounted(async () => {
     }
 
     open.value = next;
+
+    // Click off search input
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.relative')) {
+            showDropdown.value = false;
+        }
+    });
 });
 watch(
     () => page.props.article,
@@ -89,6 +97,33 @@ watch(
 );
 function toggleSection(key) {
     open.value[key] = !open.value[key];
+}
+
+// Article searching
+const search = ref('');
+const results = ref([]);
+const showDropdown = ref(false);
+
+const doSearch = debounce(async () => {
+    if (!search.value) {
+        results.value = [];
+        showDropdown.value = false;
+        return;
+    }
+
+    const res = await fetch(route('docs.search', { search: search.value }));
+    const data = await res.json();
+
+    results.value = data.articles;
+    showDropdown.value = true;
+}, 250);
+
+watch(search, doSearch);
+
+function goTo(slug) {
+    showDropdown.value = false;
+    search.value = '';
+    window.location.href = route('docs.articles.show', slug);
 }
 </script>
 
@@ -113,8 +148,8 @@ function toggleSection(key) {
                                 class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium transition hover:bg-[var(--docs-hover)]">
                                 <span class="flex min-w-0 items-center gap-3">
                                     <span class="h-4 w-[3px] rounded-full" :class="open[`cat-${cat.id}`]
-                                            ? 'bg-[var(--docs-primary)]'
-                                            : 'bg-transparent'
+                                        ? 'bg-[var(--docs-primary)]'
+                                        : 'bg-transparent'
                                         " />
                                     <span class="truncate">{{ cat.name }}</span>
                                 </span>
@@ -132,12 +167,12 @@ function toggleSection(key) {
                                     :href="route('docs.articles.show', a.slug)"
                                     class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition hover:bg-[var(--docs-hover)]"
                                     :class="a.slug === currentSlug
-                                            ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
-                                            : 'text-[var(--docs-text)]'
+                                        ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
+                                        : 'text-[var(--docs-text)]'
                                         ">
                                     <span class="h-4 w-[3px] rounded-full" :class="a.slug === currentSlug
-                                            ? 'bg-[var(--docs-primary)]'
-                                            : 'bg-transparent'
+                                        ? 'bg-[var(--docs-primary)]'
+                                        : 'bg-transparent'
                                         " />
                                     <span class="truncate">{{ a.title }}</span>
                                 </Link>
@@ -149,17 +184,17 @@ function toggleSection(key) {
                                         class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm text-[var(--docs-muted)] transition hover:bg-[var(--docs-hover)] hover:text-[var(--docs-text)]">
                                         <span class="flex min-w-0 items-center gap-3">
                                             <span class="h-4 w-[3px] rounded-full" :class="open[`child-${child.id}`]
-                                                    ? 'bg-[var(--docs-secondary)]'
-                                                    : 'bg-transparent'
+                                                ? 'bg-[var(--docs-secondary)]'
+                                                : 'bg-transparent'
                                                 " />
                                             <span class="truncate">{{
                                                 child.name
-                                                }}</span>
+                                            }}</span>
                                         </span>
 
                                         <svg class="h-4 w-4 shrink-0 transition" :class="open[`child-${child.id}`]
-                                                ? 'rotate-90'
-                                                : ''
+                                            ? 'rotate-90'
+                                            : ''
                                             " viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd"
                                                 d="M7.21 4.23a.75.75 0 011.06-.02l5.25 5a.75.75 0 010 1.08l-5.25 5a.75.75 0 11-1.04-1.08L11.94 10 7.23 5.31a.75.75 0 01-.02-1.08z"
@@ -175,16 +210,16 @@ function toggleSection(key) {
                                             "
                                             class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition hover:bg-[var(--docs-hover)]"
                                             :class="a.slug === currentSlug
-                                                    ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
-                                                    : 'text-[var(--docs-text)]'
+                                                ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
+                                                : 'text-[var(--docs-text)]'
                                                 ">
                                             <span class="h-4 w-[3px] rounded-full" :class="a.slug === currentSlug
-                                                    ? 'bg-[var(--docs-primary)]'
-                                                    : 'bg-transparent'
+                                                ? 'bg-[var(--docs-primary)]'
+                                                : 'bg-transparent'
                                                 " />
                                             <span class="truncate">{{
                                                 a.title
-                                                }}</span>
+                                            }}</span>
                                         </Link>
                                     </div>
                                 </div>
@@ -199,15 +234,23 @@ function toggleSection(key) {
                     class="sticky top-0 z-20 flex h-14 items-center justify-end border-b border-[var(--docs-border)] bg-[var(--docs-bg)]/90 px-6 backdrop-blur">
                     <div class="flex items-center gap-3">
                         <div class="relative hidden md:block">
-                            <svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--docs-muted)]"
-                                viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd"
-                                    d="M9 3.75a5.25 5.25 0 103.319 9.318l3.806 3.806a.75.75 0 101.06-1.06l-3.806-3.806A5.25 5.25 0 009 3.75zM5.25 9a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <input v-model="search" type="text" placeholder="Search articles..."
+                                class="h-10 w-64 rounded-lg border border-[var(--docs-border-strong)] bg-[var(--docs-panel-2)] px-4 text-sm text-[var(--docs-text)] outline-none focus:border-[var(--docs-primary)]" />
 
-                            <input type="text" placeholder="Search archives..."
-                                class="h-10 w-64 rounded-lg border border-[var(--docs-border-strong)] bg-[var(--docs-panel-2)] pl-10 pr-4 text-sm text-[var(--docs-text)] outline-none placeholder:text-[var(--docs-muted)] focus:border-[var(--docs-primary)]" />
+                            <div v-if="showDropdown"
+                                class="absolute mt-2 w-full rounded-lg border border-[var(--docs-border)] bg-[var(--docs-panel)] shadow-lg z-50">
+                                <div v-for="r in results" :key="r.slug" @click="goTo(r.slug)"
+                                    class="px-4 py-2 text-sm cursor-pointer hover:bg-[var(--docs-hover)]">
+                                    <div class="font-medium">{{ r.title }}</div>
+                                    <div class="text-xs text-[var(--docs-muted)]">
+                                        {{ r.category }}
+                                    </div>
+                                </div>
+
+                                <div v-if="results.length === 0" class="px-4 py-3 text-sm text-[var(--docs-muted)]">
+                                    No results
+                                </div>
+                            </div>
                         </div>
 
                         <button type="button" @click="toggleTheme"
@@ -235,13 +278,11 @@ function toggleSection(key) {
 
                 <main class="px-8 py-7 xl:px-10">
                     <div class="mb-4 text-[11px] uppercase tracking-[0.22em] text-[var(--docs-muted)]">
-                        Documentation
-                        <span class="mx-2 text-[var(--docs-border-strong)]">›</span>
                         <span>{{ article?.category?.name ?? "Category" }}</span>
-                        <span class="mx-2 text-[var(--docs-border-strong)]">›</span>
+                        <span class="mx-2 text-[var(--docs-border-strong)]">></span>
                         <span class="text-[var(--docs-primary)]">{{
                             article?.title
-                            }}</span>
+                        }}</span>
                     </div>
 
                     <div class="mb-8 max-w-4xl">
