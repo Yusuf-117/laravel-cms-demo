@@ -2,6 +2,7 @@
 import { onMounted, nextTick, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import DocsLayout from "@/Layouts/DocsLayout.vue";
+import { ArrowDownTrayIcon } from '@heroicons/vue/20/solid'
 
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
@@ -53,13 +54,7 @@ watch(
                 <span class="text-sm truncate flex-1">
                     {{ a.label || a.media.original_name }}
                 </span>
-                <svg class="h-4 w-4 text-[var(--docs-muted)] transition group-hover:text-[var(--docs-text)]"
-                    viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                        d="M3 14.75A2.75 2.75 0 005.75 17.5h8.5A2.75 2.75 0 0017 14.75v-.5a.75.75 0 00-1.5 0v.5c0 .69-.56 1.25-1.25 1.25h-8.5c-.69 0-1.25-.56-1.25-1.25v-.5a.75.75 0 00-1.5 0v.5z" />
-                    <path
-                        d="M10.75 3.75a.75.75 0 00-1.5 0v6.69L7.53 8.72a.75.75 0 10-1.06 1.06l3 3a.75.75 0 001.06 0l3-3a.75.75 0 10-1.06-1.06l-1.72 1.72V3.75z" />
-                </svg>
+                <ArrowDownTrayIcon class="h-4 w-4 text-[var(--docs-muted)] transition group-hover:text-[var(--docs-text)]"/>
             </a>
         </div>
     </DocsLayout>

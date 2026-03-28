@@ -2,6 +2,7 @@
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed, onMounted, ref, watch, nextTick } from "vue";
 import debounce from "lodash/debounce";
+import { ChevronRightIcon, SunIcon, MoonIcon, UserIcon } from "@heroicons/vue/20/solid";
 
 const props = defineProps({
     categories: {
@@ -63,17 +64,17 @@ onMounted(async () => {
     const next = {};
     for (const cat of props.categories) {
         const catHasCurrent = (cat.articles || []).some(
-            (a) => a.slug === currentSlug.value
+            (a) => a.slug === currentSlug.value,
         );
         const childHasCurrent = (cat.children || []).some((child) =>
-            (child.articles || []).some((a) => a.slug === currentSlug.value)
+            (child.articles || []).some((a) => a.slug === currentSlug.value),
         );
 
         next[`cat-${cat.id}`] = catHasCurrent || childHasCurrent;
 
         for (const child of cat.children || []) {
             const hasCurrent = (child.articles || []).some(
-                (a) => a.slug === currentSlug.value
+                (a) => a.slug === currentSlug.value,
             );
             next[`child-${child.id}`] = hasCurrent;
         }
@@ -82,8 +83,8 @@ onMounted(async () => {
     open.value = next;
 
     // Click off search input
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.relative')) {
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".relative")) {
             showDropdown.value = false;
         }
     });
@@ -93,14 +94,14 @@ watch(
     async () => {
         await nextTick();
         buildToc();
-    }
+    },
 );
 function toggleSection(key) {
     open.value[key] = !open.value[key];
 }
 
 // Article searching
-const search = ref('');
+const search = ref("");
 const results = ref([]);
 const showDropdown = ref(false);
 
@@ -111,7 +112,7 @@ const doSearch = debounce(async () => {
         return;
     }
 
-    const res = await fetch(route('docs.search', { search: search.value }));
+    const res = await fetch(route("docs.search", { search: search.value }));
     const data = await res.json();
 
     results.value = data.articles;
@@ -122,8 +123,8 @@ watch(search, doSearch);
 
 function goTo(slug) {
     showDropdown.value = false;
-    search.value = '';
-    window.location.href = route('docs.articles.show', slug);
+    search.value = "";
+    window.location.href = route("docs.articles.show", slug);
 }
 </script>
 
@@ -148,18 +149,14 @@ function goTo(slug) {
                                 class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium transition hover:bg-[var(--docs-hover)]">
                                 <span class="flex min-w-0 items-center gap-3">
                                     <span class="h-4 w-[3px] rounded-full" :class="open[`cat-${cat.id}`]
-                                        ? 'bg-[var(--docs-primary)]'
-                                        : 'bg-transparent'
+                                            ? 'bg-[var(--docs-primary)]'
+                                            : 'bg-transparent'
                                         " />
                                     <span class="truncate">{{ cat.name }}</span>
                                 </span>
 
-                                <svg class="h-4 w-4 shrink-0 text-[var(--docs-muted)] transition" :class="open[`cat-${cat.id}`] ? 'rotate-90' : ''
-                                    " viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M7.21 4.23a.75.75 0 011.06-.02l5.25 5a.75.75 0 010 1.08l-5.25 5a.75.75 0 11-1.04-1.08L11.94 10 7.23 5.31a.75.75 0 01-.02-1.08z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                                <ChevronRightIcon class="h-4 w-4 shrink-0 text-[var(--docs-muted)] transition" :class="open[`cat-${cat.id}`] ? 'rotate-90' : ''
+                                    " />
                             </button>
 
                             <div v-show="open[`cat-${cat.id}`]" class="space-y-1 pl-3">
@@ -167,12 +164,12 @@ function goTo(slug) {
                                     :href="route('docs.articles.show', a.slug)"
                                     class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition hover:bg-[var(--docs-hover)]"
                                     :class="a.slug === currentSlug
-                                        ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
-                                        : 'text-[var(--docs-text)]'
+                                            ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
+                                            : 'text-[var(--docs-text)]'
                                         ">
                                     <span class="h-4 w-[3px] rounded-full" :class="a.slug === currentSlug
-                                        ? 'bg-[var(--docs-primary)]'
-                                        : 'bg-transparent'
+                                            ? 'bg-[var(--docs-primary)]'
+                                            : 'bg-transparent'
                                         " />
                                     <span class="truncate">{{ a.title }}</span>
                                 </Link>
@@ -184,42 +181,36 @@ function goTo(slug) {
                                         class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm text-[var(--docs-muted)] transition hover:bg-[var(--docs-hover)] hover:text-[var(--docs-text)]">
                                         <span class="flex min-w-0 items-center gap-3">
                                             <span class="h-4 w-[3px] rounded-full" :class="open[`child-${child.id}`]
-                                                ? 'bg-[var(--docs-secondary)]'
-                                                : 'bg-transparent'
+                                                    ? 'bg-[var(--docs-secondary)]'
+                                                    : 'bg-transparent'
                                                 " />
                                             <span class="truncate">{{
                                                 child.name
-                                            }}</span>
+                                                }}</span>
                                         </span>
 
-                                        <svg class="h-4 w-4 shrink-0 transition" :class="open[`child-${child.id}`]
-                                            ? 'rotate-90'
-                                            : ''
-                                            " viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M7.21 4.23a.75.75 0 011.06-.02l5.25 5a.75.75 0 010 1.08l-5.25 5a.75.75 0 11-1.04-1.08L11.94 10 7.23 5.31a.75.75 0 01-.02-1.08z"
-                                                clip-rule="evenodd" />
-                                        </svg>
+                                        <ChevronRightIcon class="h-4 w-4 shrink-0 transition"
+                                            :class="open[`child-${child.id}`] ? 'rotate-90' : ''" />
                                     </button>
 
                                     <div v-show="open[`child-${child.id}`]" class="space-y-1 pl-3">
                                         <Link v-for="a in child.articles || []" :key="a.id" :href="route(
                                             'docs.articles.show',
-                                            a.slug
+                                            a.slug,
                                         )
                                             "
                                             class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition hover:bg-[var(--docs-hover)]"
                                             :class="a.slug === currentSlug
-                                                ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
-                                                : 'text-[var(--docs-text)]'
+                                                    ? 'bg-[var(--docs-hover)] text-[var(--docs-primary)]'
+                                                    : 'text-[var(--docs-text)]'
                                                 ">
                                             <span class="h-4 w-[3px] rounded-full" :class="a.slug === currentSlug
-                                                ? 'bg-[var(--docs-primary)]'
-                                                : 'bg-transparent'
+                                                    ? 'bg-[var(--docs-primary)]'
+                                                    : 'bg-transparent'
                                                 " />
                                             <span class="truncate">{{
                                                 a.title
-                                            }}</span>
+                                                }}</span>
                                         </Link>
                                     </div>
                                 </div>
@@ -255,23 +246,13 @@ function goTo(slug) {
 
                         <button type="button" @click="toggleTheme"
                             class="rounded-lg p-2 text-[var(--docs-muted)] transition hover:bg-[var(--docs-hover)] hover:text-[var(--docs-text)]">
-                            <svg v-if="theme === 'dark'" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M10 2.75a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V3.5a.75.75 0 01.75-.75zm0 11.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V15a.75.75 0 01.75-.75zm7.25-4.25a.75.75 0 010 1.5h-1.5a.75.75 0 010-1.5h1.5zM5 10a.75.75 0 010 1.5H3.5a.75.75 0 010-1.5H5zm10.157-4.157a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM7.963 13.037a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm7.194 2.12a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 111.06-1.06l1.06 1.06a.75.75 0 010 1.06zM7.963 6.963a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 011.06-1.06l1.06 1.06a.75.75 0 010 1.06zM10 6.25a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" />
-                            </svg>
-
-                            <svg v-else class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M17.293 13.293a.75.75 0 00-.982-.087 7.5 7.5 0 01-9.517-9.517.75.75 0 00-.94-.94A9 9 0 1018.233 14.233a.75.75 0 00-.94-.94z" />
-                            </svg>
+                            <SunIcon v-if="theme === 'dark'" class="h-5 w-5" />
+                            <MoonIcon v-else class="h-5 w-5" />
                         </button>
 
                         <Link :href="route('login')"
                             class="rounded-lg p-2 text-[var(--docs-muted)] transition hover:bg-[var(--docs-hover)] hover:text-[var(--docs-text)]">
-                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path
-                                    d="M10 10a3.25 3.25 0 100-6.5 3.25 3.25 0 000 6.5zM4.25 16A4.75 4.75 0 019 11.25h2A4.75 4.75 0 0115.75 16v.25H4.25V16z" />
-                            </svg>
+                            <UserIcon class="h-5 w-5" />
                         </Link>
                     </div>
                 </header>
@@ -282,7 +263,7 @@ function goTo(slug) {
                         <span class="mx-2 text-[var(--docs-border-strong)]">></span>
                         <span class="text-[var(--docs-primary)]">{{
                             article?.title
-                        }}</span>
+                            }}</span>
                     </div>
 
                     <div class="mb-8 max-w-4xl">
