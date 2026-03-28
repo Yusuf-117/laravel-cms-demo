@@ -16,7 +16,7 @@ class DocsController extends Controller
             'articles'
         ])
         ->whereNull('parent_id')
-        ->orderBy('position')
+        ->orderBy('sort_order')
         ->get();
 
         $firstArticle = Article::orderBy('position')->first();
@@ -62,7 +62,7 @@ class DocsController extends Controller
         ->whereHas('articles', function ($q) {
             $q->where('status', 'published');
         })
-        ->orderBy('position')
+        ->orderBy('sort_order')
         ->get();
 
         return Inertia::render('Docs/Show', [

@@ -6,8 +6,8 @@ import { watch } from 'vue'
 const form = useForm({
     name: '',
     slug: '',
+    sort_order: 0,
 })
-
 watch(
     () => form.name,
     (value) => {
@@ -59,7 +59,14 @@ function submit() {
                             {{ form.errors.name }}
                         </p>
                     </div>
-
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Order</label>
+                        <input
+                            v-model="form.sort_order"
+                            type="number"
+                            class="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                        />
+                    </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium">Slug</label>
                         <input v-model="form.slug" type="text" placeholder="e.g. getting-started"

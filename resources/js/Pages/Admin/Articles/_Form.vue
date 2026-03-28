@@ -193,7 +193,15 @@ async function uploadAttachmentFile(e) {
                 </div>
             </div>
         </div>
-
+        <!-- order -->
+        <div>
+            <label class="block text-sm font-medium mb-1">Order</label>
+            <input
+                v-model="form.sort_order"
+                type="number"
+                class="w-full rounded-lg border px-4 py-2 dark:bg-zinc-900"
+            />
+        </div>
         <!-- Status -->
         <div>
             <label class="block text-sm font-medium mb-1">Status</label>

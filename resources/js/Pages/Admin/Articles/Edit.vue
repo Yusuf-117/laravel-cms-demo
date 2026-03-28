@@ -23,6 +23,7 @@ const form = useForm({
         label: a.label,
         sort_order: a.sort_order,
     })),
+    sort_order: props.article.sort_order,
 })
 
 function submit() {

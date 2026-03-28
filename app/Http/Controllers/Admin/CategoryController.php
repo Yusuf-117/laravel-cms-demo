@@ -34,6 +34,7 @@ class CategoryController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'slug' => ['required', 'string', 'max:140', 'unique:categories,slug'],
+            'sort_order' => ['nullable', 'integer'],
         ]);
 
     Category::create($data);
@@ -55,6 +56,7 @@ class CategoryController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'slug' => ['required', 'string', 'max:140', "unique:categories,slug,{$category->id}"],
+            'sort_order' => ['nullable', 'integer'],
         ]);
 
         $category->update($data);

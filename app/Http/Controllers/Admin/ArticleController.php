@@ -48,6 +48,7 @@ class ArticleController extends Controller
             'attachments' => ['array'],
             'attachments.*.media_id' => ['required', 'exists:media,id'],
             'attachments.*.label' => ['nullable', 'string'],
+            'sort_order' => ['nullable', 'integer'],
         ]);
 
         $article = Article::create($data);
@@ -101,6 +102,7 @@ class ArticleController extends Controller
             'attachments' => ['array'],
             'attachments.*.media_id' => ['required', 'exists:media,id'],
             'attachments.*.label' => ['nullable', 'string'],
+            'sort_order' => ['nullable', 'integer'],
         ]);
 
         $article->update($data);

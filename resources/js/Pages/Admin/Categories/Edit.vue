@@ -11,6 +11,7 @@ const props = defineProps({
 const form = useForm({
     name: props.category.name,
     slug: props.category.slug,
+    sort_order: props.category.sort_order ?? 0,
 });
 
 function submit() {
@@ -52,7 +53,14 @@ function destroy() {
                             {{ form.errors.name }}
                         </p>
                     </div>
-
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium">Order</label>
+                        <input
+                            v-model="form.sort_order"
+                            type="number"
+                            class="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                        />
+                    </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-medium">Slug</label>
                         <input v-model="form.slug" type="text"

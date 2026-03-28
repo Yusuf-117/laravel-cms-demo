@@ -16,6 +16,7 @@ const form = useForm({
     status: 'draft',
     tags: [],
     attachments: [],
+    sort_order: 0,
 })
 
 function submit() {
