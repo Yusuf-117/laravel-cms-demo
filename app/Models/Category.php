@@ -24,7 +24,7 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id')->orderBy('position');
+        return $this->hasMany(Category::class, 'parent_id')->orderBy('sort_order');
     }
 
     public function parent()
@@ -34,7 +34,7 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->hasMany(Article::class)->orderBy('position');
+        return $this->hasMany(Article::class)->orderBy('sort_order');
     }
 
     public function scopeOrdered(Builder $query): Builder
