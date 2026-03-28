@@ -64,7 +64,7 @@ function showToast(message, type = "success") {
     <div
         class="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100"
     >
-        <div class="flex">
+        <div class="flex min-h-screen">
             <aside
                 class="w-64 shrink-0 border-r border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900"
             >
@@ -75,15 +75,8 @@ function showToast(message, type = "success") {
                         :href="route('admin.dashboard')"
                         class="font-semibold"
                     >
-                        Admin
+                        Admin Page
                     </Link>
-
-                    <div
-                        v-if="user"
-                        class="text-sm text-zinc-600 dark:text-zinc-400"
-                    >
-                    &nbsp; - {{ user.name ?? user.email }}
-                    </div>
                 </div>
 
                 <nav class="p-2 space-y-1">
@@ -119,7 +112,11 @@ function showToast(message, type = "success") {
                 <header
                     class="h-14 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-4"
                 >
-                    <div class="text-sm font-medium">Dashboard</div>
+                    <div
+                        v-if="user"
+                        class="text-sm text-zinc-600 dark:text-zinc-400"
+                    > {{ user.name ?? user.email }}
+                    </div>
 
                     <div class="flex items-center gap-3">
                         <button
