@@ -25,8 +25,10 @@
         "@tiptap/pm": "^3.20.5",
         "@tiptap/starter-kit": "^3.20.5",
         "@tiptap/vue-3": "^3.20.5",
+        "@tsparticles/vue3": "^3.0.1",
         "@vitejs/plugin-vue": "^6.0.3",
         "highlight.js": "^11.11.1",
-        "lodash": "^4.17.23"
+        "lodash": "^4.17.23",
+        "tsparticles": "^3.9.1"
     }
 }

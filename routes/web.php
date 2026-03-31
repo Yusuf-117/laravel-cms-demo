@@ -67,4 +67,4 @@ Route::domain('cms.' . config('app.domain'))->group(function () {
 
 Route::get('/', function () {
     return view('portfolio');
-})->name('portfolio');
+});
