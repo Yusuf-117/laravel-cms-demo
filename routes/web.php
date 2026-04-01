@@ -5,9 +5,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ImportController;
 use App\Http\Controllers\Admin\MediaController;
-use App\Http\Controllers\DocsController;
-
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DocsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 Route::domain('cms.' . config('app.domain'))->group(function () {
@@ -68,3 +68,6 @@ Route::domain('cms.' . config('app.domain'))->group(function () {
 Route::get('/', function () {
     return view('portfolio');
 });
+
+Route::post('/contact', ContactController::class)
+    ->middleware('throttle:5,1');

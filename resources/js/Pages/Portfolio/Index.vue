@@ -10,6 +10,25 @@ const handleScroll = () => {
 
 onMounted(() => {
     window.addEventListener("scroll", handleScroll);
+    const el = document.querySelector("#gol-bg");
+    const grid = LifeGrid.init({
+        selector: "#gol-bg",
+        width: el.offsetWidth,
+        height: el.offsetHeight,
+        cellSize: 10,
+        density: 0.08,
+        speed: 30,
+        aliveColor: "#bd4b4b70",
+        deadColor: "#00000000",
+        mouseDraw: false,
+        background: true,
+    });
+    // for dev, destroy existing grid
+    if (import.meta.hot) {
+        import.meta.hot.dispose(() => {
+            grid?.destroy();
+        });
+    }
 });
 
 onUnmounted(() => {
@@ -266,32 +285,176 @@ const send = async () => {
             </div>
 
             <!-- Mini projects -->
-            <!-- <div class="mx-auto mt-32 max-w-6xl px-6">
-                <h3 class="text-4xl font-bold mt-20">Mini projects</h3>
+            <div
+                id="gol-bg"
+                class="min-h-screen flex items-center relative mt-32"
+            >
+                <div class="mx-auto max-w-6xl px-6 z-10">
+                    <h3 class="text-4xl font-bold mt-20">Mini projects</h3>
 
-                <div class="mt-10 grid gap-8 md:grid-cols-2">
-                    <div class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]">
-                        <h4 class="text-xl font-semibold">Mini Project 1</h4>
-                        <a
-                            href="#"
-                            class="mt-6 inline-block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                    <div class="mt-10 grid gap-8 md:grid-cols-2">
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
                         >
-                            GitHub
-                        </a>
-                    </div>
+                            <h4 class="text-xl font-semibold mb-5">
+                                Maze game
+                            </h4>
+                            <p>
+                                A P5.js Maze game that uses recursive
+                                backtracking to generate a random maze which you
+                                can then attempt to solve. Health, Movement and
+                                a clear goal added to make the experience more
+                                game-like
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/P5-Maze-game"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/P5-Maze-game"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
 
-                    <div class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]">
-                        <h4 class="text-xl font-semibold">Mini Project 2</h4>
-                        <a
-                            href="#"
-                            class="mt-6 inline-block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
                         >
-                            GitHub
-                        </a>
+                            <h4 class="text-xl font-semibold mb-5">
+                                Block Shooter Minigame
+                            </h4>
+                            <p>
+                                A quick p5.js minigame I built while preparing
+                                for the maze game that ended up being a tad more
+                                fun than expected
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/P5-Shooter-Game"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/P5-Shooter-Game"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
+
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
+                        >
+                            <h4 class="text-xl font-semibold mb-5">Lifegrid</h4>
+                            <p>
+                                Conway's Game of Life as a drop-in animated
+                                background library (used for the bg of this
+                                section)
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/Lifegrid"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/Lifegrid"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
+
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
+                        >
+                            <h4 class="text-xl font-semibold mb-5">
+                                Memory game
+                            </h4>
+                            <p>
+                                Conway's Game of Life as a drop-in animated
+                                background library
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/memoryGame"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/memoryGame"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
+
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
+                        >
+                            <h4 class="text-xl font-semibold mb-5">
+                                API usage demo
+                            </h4>
+                            <p>
+                                Submission for an online coding challenge. Task:
+                                "Create a page that uses at least 4 APIs" to
+                                demonstrate API usage.
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/apiUsage"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/apiUsage"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
+
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
+                        >
+                            <h4 class="text-xl font-semibold mb-5">
+                                "Single Product Page"
+                            </h4>
+                            <p>
+                                Submission for an online coding challenge. Task:
+                                "Create a single product page advertising a fake
+                                product"
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/SPP"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/SPP"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
+
+                        <div
+                            class="bg-zinc-950 p-6 shadow-[14px_14px_0px_#BD4B4B]"
+                        >
+                            <h4 class="text-xl font-semibold mb-5">
+                                "Master coder"
+                            </h4>
+                            <p>
+                                Submission for an online coding challenge. Task:
+                                "Create a single page with the term 'Master
+                                Coder'"
+                            </p>
+                            <a
+                                href="https://yusuf-117.github.io/SPP"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >Live Demo</a
+                            >
+                            <a
+                                href="https://github.com/Yusuf-117/SPP"
+                                class="mt-6 w-fit block border-b-2 border-[#BD4B4B] pb-1 uppercase tracking-[0.2em]"
+                                >GitHub</a
+                            >
+                        </div>
                     </div>
                 </div>
-                <h3 class="text-4xl font-bold mt-20">And more to come...</h3>
-            </div> -->
+            </div>
         </section>
 
         <!-- Contact -->
