@@ -117,3 +117,104 @@ body {
     padding: 2px 6px;
     border-radius: 6px;
   }
+
+
+/* portfolio */
+
+
+  .page-shell {
+    --accent: #bd4b4b;
+    --accent-soft: #efb7b7;
+    --bg-main: #0f172a;
+
+    @apply relative min-h-screen overflow-x-hidden text-zinc-100;
+    background: var(--bg-main);
+}
+
+.section-shell {
+    @apply relative mx-auto max-w-6xl px-6;
+}
+
+.nav-shell {
+    @apply bg-slate-900/80 backdrop-blur;
+}
+
+.nav-link {
+    @apply transition-colors;
+}
+
+.nav-link:hover {
+    color: var(--accent);
+}
+
+.section-label {
+    @apply mb-4 text-sm uppercase tracking-[0.3em] text-zinc-400;
+}
+
+.primary-btn {
+    @apply inline-flex items-center bg-zinc-950 px-8 py-4 uppercase tracking-[0.2em] transition-all duration-200;
+    box-shadow: 12px 12px 0 var(--accent);
+}
+
+.primary-btn:hover {
+    @apply translate-x-[6px] translate-y-[6px];
+    box-shadow: 6px 6px 0 var(--accent);
+}
+
+.panel-frame {
+    @apply bg-zinc-950 p-1;
+    box-shadow: none;
+}
+
+@media (min-width: 1024px) {
+    .panel-frame {
+        box-shadow: 24px 24px 0 var(--accent);
+    }
+}
+
+.mini-card {
+    @apply bg-zinc-950 p-6;
+    box-shadow: 5px 5px 0 var(--accent);
+}
+
+.accent-link {
+    @apply block w-fit border-b-2 pb-2 uppercase tracking-[0.2em];
+    border-color: var(--accent);
+}
+
+.tech-card {
+    @apply flex h-28 flex-col items-center justify-center border border-white/10 bg-black/30 backdrop-blur-sm transition;
+}
+
+.tech-card:hover {
+    border-color: var(--accent);
+}
+
+.input-field {
+    @apply w-full border border-white/10 bg-black/40 px-5 py-4 text-white placeholder-zinc-500 outline-none transition;
+}
+
+.input-field:focus {
+    border-color: var(--accent);
+    background: rgb(0 0 0 / 0.6);
+}
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgb(255 255 255 / 0.25);
+    border-top-color: white;
+    border-radius: 9999px;
+    animation: spin 0.7s linear infinite;
+    margin-right: 10px;
+}
+
+.toast {
+    @apply mt-6 inline-block bg-zinc-950 px-6 py-3 text-sm uppercase tracking-[0.15em];
+    box-shadow: 5px 5px 0 var(--accent);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
