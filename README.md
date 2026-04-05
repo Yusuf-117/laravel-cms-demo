@@ -1,59 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Knowledge Archive CMS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full demo knowledge base / CMS built with Laravel 11, Inertia 2, Vue 3, and Tailwind 4.
 
-## About Laravel
+I put this together as a proper "complete-feeling" public repo for my portfolio. The goal was not to overengineer it into a production SaaS, but to build something that feels real enough to demo actual architecture decisions, frontend polish, reusable admin workflows and content structure.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+It doubles as a place for me to store useful programming notes and concepts I come across, while also acting as a showcase project for Laravel + Vue + CMS style work.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The main domain acts as a portfolio landing page, while the CMS itself is designed to run under a dedicated subdomain.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Frontend docs experience
+- Docs-style reading UI inspired by modern enterprise documentation sites
+- Dark and light themes
+- Shared central theme system
+- Collapsible category sidebar with nested categories
+- "On this page" heading navigation
+- Live article search dropdown
+- Attachment downloads
+- Responsive layout with docs navigation + content rail
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Admin CMS
+- Manual auth system
+- Role-aware admin backend (didn;t really bother with UI too much here)
+    - `admin` role with full content access
+    - `viewer` role for safe demo logins
+- Category + CRUD
+- Rich text article editor using TipTap
+- Shared reusable article form partial
+- Tagging with create-on-type + suggestions
+- Article ordering / priority
+- Category ordering / priority
+- Draft / published workflow
+- Media library
+- Reusable attachments
+- File upload directly from article forms
+- Global success / error toast messaging
+- Dark and light admin themes
 
-## Laravel Sponsors
+### Portfolio root page
+- Separate Vue-powered landing page
+- Tailwind styling shared with the CMS repo
+- Interactive particle background using `@tsparticles/vue3`
+- Clean separation from CMS routes while still living in the same Laravel codebase
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Tech Stack
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Laravel 11
+- PHP 8+
+- Inertia.js 2
+- Vue 3
+- Tailwind CSS 4
+- TipTap editor
+- SQLite (default demo setup)
+- Vite
+- tsParticles
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Demo Account
 
-## Code of Conduct
+Safe demo account for exploring the backend UI without edit permissions.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```text
+Email: viewer@example.com
+Password: password
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Intentional Tradeoffs
 
-## License
+This repo is designed as a proof of concept and architecture showcase.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+That means some production-grade concerns are intentionally lightweight:
+
+* simple auth flow
+* no advanced user management yet
+* no comments system yet
+* no revision history
+* no granular permissions beyond roles
+* no analytics
+* no article versioning
+
+That is by design.
+
+The point here was to demonstrate strong foundations and clear extension paths rather than spend weeks building every enterprise edge case.
+
+---
+
+## Future Improvements
+
+Things I may add later:
+
+* full user management
+* comments per article
+* lightweight internal chatroom / websocket playground
+* article revision history
+* usage analytics
+* role permissions beyond viewer/admin
+* syntax-highlighted code blocks with copy buttons
+* article reactions / feedback
