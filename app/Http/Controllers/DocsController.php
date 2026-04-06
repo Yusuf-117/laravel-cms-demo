@@ -19,7 +19,7 @@ class DocsController extends Controller
         ->orderBy('sort_order')
         ->get();
 
-        $firstArticle = Article::orderBy('position')->first();
+        $firstArticle = Article::orderBy('sort_order')->first();
 
         return redirect()->route('docs.articles.show', $firstArticle->slug);
     }
