@@ -20,7 +20,7 @@ class ContactController extends Controller
             . "Email: {$data['email']}\n\n"
             . $data['message'],
             function ($mail) use ($data) {
-                $mail->to(config('mail.from.address'))
+                $mail->to(env('CONTACT_EMAIL'))
                     ->subject('Portfolio Contact Form')
                     ->replyTo($data['email'], $data['name']);
             }
