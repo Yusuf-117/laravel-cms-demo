@@ -20,8 +20,9 @@ class DocsController extends Controller
         ->get();
 
         $firstArticle = Article::orderBy('sort_order')->first();
+        $firstSlug = $firstArticle->slug ?? "";
 
-        return redirect()->route('docs.articles.show', $firstArticle->slug);
+        return redirect()->route('docs.articles.show', $firstSlug);
     }
 
     public function category(Category $category)
