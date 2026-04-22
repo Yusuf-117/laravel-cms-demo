@@ -58,6 +58,12 @@ const miniProjects = [
         github: "https://github.com/Yusuf-117/memoryGame",
     },
     {
+        title: "Ruby Chess",
+        description: "A Ruby CLI Chess game completed as part of Odin Challenge.",
+        demo: "",
+        github: "https://github.com/Yusuf-117/ruby-chess",
+    },
+    {
         title: "API usage demo",
         description:
             'Submission for a coding challenge: "Create a page that uses at least 4 APIs".',
@@ -82,6 +88,7 @@ const miniProjects = [
 
 const cmsPreview = "/images/cms.png";
 const crmPreview = "/images/crm.png";
+const symfonyPreview = "/images/recruit.png";
 
 const form = ref({
     name: "",
@@ -208,24 +215,12 @@ const send = async () => {
 
 <template>
     <div class="page-shell">
-        <transition
-            enter-active-class="transition duration-300"
-            enter-from-class="opacity-0 -translate-y-3"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition duration-200"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
+        <transition enter-active-class="transition duration-300" enter-from-class="opacity-0 -translate-y-3"
+            enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-200"
+            leave-from-class="opacity-100" leave-to-class="opacity-0">
             <nav v-if="showNav" class="fixed top-0 z-50 w-full nav-shell">
-                <div
-                    class="section-shell flex justify-center gap-6 py-4 text-sm uppercase tracking-[0.2em] md:gap-10"
-                >
-                    <a
-                        v-for="link in navLinks"
-                        :key="link.href"
-                        :href="link.href"
-                        class="nav-link"
-                    >
+                <div class="section-shell flex justify-center gap-6 py-4 text-sm uppercase tracking-[0.2em] md:gap-10">
+                    <a v-for="link in navLinks" :key="link.href" :href="link.href" class="nav-link">
                         {{ link.label }}
                     </a>
                 </div>
@@ -233,24 +228,16 @@ const send = async () => {
         </transition>
 
         <!-- Hero -->
-        <section
-            id="home"
-            class="relative isolate flex min-h-screen items-center justify-center overflow-hidden text-center"
-        >
+        <section id="home"
+            class="relative isolate flex min-h-screen items-center justify-center overflow-hidden text-center">
             <div class="absolute inset-0 z-0">
-                <vue-particles
-                    id="tsparticles"
-                    :options="options"
-                    class="h-full w-full"
-                />
+                <vue-particles id="tsparticles" :options="options" class="h-full w-full" />
             </div>
 
             <div class="relative z-10 px-6">
                 <p class="mb-4 text-lg text-zinc-300 md:text-xl">Hello, I'm</p>
 
-                <h1
-                    class="text-5xl font-bold tracking-tight sm:text-6xl md:text-8xl"
-                >
+                <h1 class="text-5xl font-bold tracking-tight sm:text-6xl md:text-8xl">
                     Yusuf
                 </h1>
 
@@ -260,9 +247,7 @@ const send = async () => {
 
                 <a href="#projects" class="primary-btn group mt-10">
                     <span>View my work</span>
-                    <span
-                        class="ml-3 transition-transform duration-200 group-hover:translate-x-1"
-                    >
+                    <span class="ml-3 transition-transform duration-200 group-hover:translate-x-1">
                         →
                     </span>
                 </a>
@@ -270,10 +255,8 @@ const send = async () => {
         </section>
 
         <!-- About -->
-        <section
-            id="about"
-            class="section-shell relative z-10 flex flex-col items-center gap-16 py-20 md:py-32 lg:flex-row"
-        >
+        <section id="about"
+            class="section-shell relative z-10 flex flex-col items-center gap-16 py-20 md:py-32 lg:flex-row">
             <div class="w-full lg:w-1/2">
                 <p class="section-label">About</p>
 
@@ -284,27 +267,15 @@ const send = async () => {
             </div>
 
             <div class="w-full lg:w-1/2">
-                <div
-                    class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
-                >
-                    <div
-                        v-for="(tech, index) in techStack"
-                        :key="tech.name"
-                        :class="[
-                            'tech-card',
-                            Math.floor(index / 4) % 2 === 1
-                                ? 'lg:translate-x-6'
-                                : '',
-                        ]"
-                    >
-                        <img
-                            :src="tech.icon"
-                            :alt="tech.name"
-                            class="h-10 w-10 object-contain"
-                        />
-                        <span
-                            class="mt-3 text-xs uppercase tracking-[0.2em] text-zinc-300"
-                        >
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                    <div v-for="(tech, index) in techStack" :key="tech.name" :class="[
+                        'tech-card',
+                        Math.floor(index / 4) % 2 === 1
+                            ? 'lg:translate-x-6'
+                            : '',
+                    ]">
+                        <img :src="tech.icon" :alt="tech.name" class="h-10 w-10 object-contain" />
+                        <span class="mt-3 text-xs uppercase tracking-[0.2em] text-zinc-300">
                             {{ tech.name }}
                         </span>
                     </div>
@@ -314,22 +285,14 @@ const send = async () => {
 
         <!-- Projects -->
         <section id="projects" class="relative z-10 py-20">
-            <div
-                class="section-shell grid grid-cols-1 items-center gap-16 lg:grid-cols-2"
-            >
+            <div class="section-shell grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
                 <div class="panel-frame">
-                    <img
-                        :src="cmsPreview"
-                        alt="Project preview"
-                        class="w-full"
-                    />
+                    <img :src="cmsPreview" alt="Project preview" class="w-full" />
                 </div>
 
                 <div>
                     <p class="section-label">Demo</p>
-                    <h2
-                        class="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl"
-                    >
+                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
                         Laravel CMS
                     </h2>
 
@@ -343,24 +306,17 @@ const send = async () => {
 
                     <div class="mt-10 space-y-6">
                         <a :href="cmsUrl" class="accent-link">Live Demo</a>
-                        <a
-                            href="https://github.com/Yusuf-117/laravel-cms-demo"
-                            class="accent-link"
-                        >
+                        <a href="https://github.com/Yusuf-117/laravel-cms-demo" class="accent-link">
                             GitHub
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div
-                class="section-shell mt-50 grid grid-cols-1 items-center gap-16 lg:grid-cols-2"
-            >
+            <div class="section-shell mt-50 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
                 <div>
                     <p class="section-label">Demo</p>
-                    <h2
-                        class="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl"
-                    >
+                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
                         Rails CRM
                     </h2>
 
@@ -371,21 +327,38 @@ const send = async () => {
                     </p>
 
                     <div class="mt-10 space-y-6">
-                        <a
-                            href="https://github.com/Yusuf-117/mini-rails-crm"
-                            class="accent-link"
-                        >
+                        <a href="https://github.com/Yusuf-117/mini-rails-crm" class="accent-link">
                             GitHub
                         </a>
                     </div>
                 </div>
 
                 <div class="panel-frame">
-                    <img
-                        :src="crmPreview"
-                        alt="Project preview"
-                        class="w-full"
-                    />
+                    <img :src="crmPreview" alt="Project preview" class="w-full" />
+                </div>
+            </div>
+
+            <div class="section-shell mt-50 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+                <div class="panel-frame">
+                    <img :src="symfonyPreview" alt="Project preview" class="w-full" />
+                </div>
+
+                <div>
+                    <p class="section-label">Demo</p>
+                    <h2 class="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+                        Symfony CRM
+                    </h2>
+
+                    <p class="mt-8 max-w-xl text-lg text-zinc-400">
+                        A demo recruitment CRM built with Symfony, Doctrine ORM, Twig and TailwindCSS. Includes candidate/vacancy management, application tracking, and a stage-based pipeline.
+                    </p>
+
+                    <div class="mt-10 space-y-6">
+                        <a href="https://recruit.yusufibrahim.co.uk" class="accent-link">Live Demo</a>
+                        <a href="https://github.com/Yusuf-117/symfony-recruit-demo" class="accent-link">
+                            GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -394,28 +367,21 @@ const send = async () => {
             </h3>
 
             <!-- Weekend builds -->
-            <div
-                id="gol-bg"
-                class="relative mt-32 min-h-screen flex items-center p-5"
-            >
+            <div id="gol-bg" class="relative mt-32 min-h-screen flex items-center p-5">
                 <div class="section-shell relative z-10">
                     <h3 class="text-3xl font-bold md:text-4xl">
                         Weekend builds
                     </h3>
 
                     <div class="mt-10 grid gap-8 md:grid-cols-2">
-                        <div
-                            v-for="project in miniProjects"
-                            :key="project.title"
-                            class="mini-card"
-                        >
+                        <div v-for="project in miniProjects" :key="project.title" class="mini-card">
                             <h4 class="mb-5 text-xl font-semibold">
                                 {{ project.title }}
                             </h4>
 
                             <p>{{ project.description }}</p>
 
-                            <a :href="project.demo" class="accent-link mt-6">
+                            <a v-if="project.demo != ''" :href="project.demo" class="accent-link mt-6">
                                 Live Demo
                             </a>
 
@@ -429,10 +395,7 @@ const send = async () => {
         </section>
 
         <!-- Contact -->
-        <section
-            id="contact"
-            class="relative z-10 mx-auto max-w-4xl px-6 py-20"
-        >
+        <section id="contact" class="relative z-10 mx-auto max-w-4xl px-6 py-20">
             <p class="section-label">Contact</p>
 
             <h2 class="mb-14 text-2xl font-bold md:text-4xl">
@@ -440,40 +403,20 @@ const send = async () => {
             </h2>
 
             <form @submit.prevent="send" class="space-y-8">
-                <input
-                    v-model="form.name"
-                    type="text"
-                    placeholder="Name"
-                    class="input-field"
-                />
+                <input v-model="form.name" type="text" placeholder="Name" class="input-field" />
 
-                <input
-                    v-model="form.email"
-                    type="email"
-                    placeholder="Email"
-                    class="input-field"
-                />
+                <input v-model="form.email" type="email" placeholder="Email" class="input-field" />
 
-                <textarea
-                    v-model="form.message"
-                    rows="6"
-                    placeholder="Message"
-                    class="input-field"
-                ></textarea>
+                <textarea v-model="form.message" rows="6" placeholder="Message" class="input-field"></textarea>
 
                 <button type="submit" class="primary-btn" :disabled="sending">
                     <span v-if="sending" class="spinner"></span>
                     <span>{{ sending ? "Sending..." : "Send" }}</span>
                 </button>
             </form>
-            <transition
-                enter-active-class="transition duration-300"
-                enter-from-class="opacity-0 translate-y-2"
-                enter-to-class="opacity-100 translate-y-0"
-                leave-active-class="transition duration-200"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
+            <transition enter-active-class="transition duration-300" enter-from-class="opacity-0 translate-y-2"
+                enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-200"
+                leave-from-class="opacity-100" leave-to-class="opacity-0">
                 <div v-if="toast" class="toast">
                     {{ toast }}
                 </div>
